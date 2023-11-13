@@ -1,0 +1,32 @@
+/* Reset default margin and padding */
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Create a container to hold the two panels */
+.container {
+  display: flex; /* Use flexbox to create a two-panel layout */
+  justify-content: space-between; /* Separate panels with space */
+  padding: 20px; /* Add padding for spacing */
+  height: 100%; /* Set the height to fill the viewport */
+}
+
+/* Style for the left panel */
+.left-panel {
+  background-color: #000000;
+  color: #ffffff;
+  flex-basis: 40%; /* Adjust the width of the left panel */
+  padding: 10vw;
+  box-sizing: border-box; /* Include padding in the width calculation */
+  height: 100%; /* Set the height to fill the container */
+}
+
+/* Style for the right panel */
+.right-panel {
+  background-color: #f0f0f0;
+  flex-basis: 60%; /* Adjust the width of the right panel */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in the width calculation */
+}

@@ -1,0 +1,52 @@
+@keyframes slideLeft {
+  from {
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+  }
+}
+
+.left {
+  animation: 1s ease-out 1s 1 slideLeft forwards;
+  -webkit-animation: 1s ease-out 1s 1 slideLeft forwards;
+}
+
+.bars span {
+  display: inline-block;
+  width: 100%;
+  min-height: 16.7vh;
+  padding: 0px;
+  margin: 0px;
+}
+
+.bars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  z-index: 2;
+}
+
+#red {
+  background: rgb(234, 62, 56);
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  height: 100px;
+}
+#text {
+  text-align: center;
+  justify-content: center;
+  font-size: larger;
+}
