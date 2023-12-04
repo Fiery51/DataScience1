@@ -124,10 +124,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Fetch data from CSV file
-  d3.csv("Graph2.csv").then(function (newData) {
+  d3.csv(
+    "https://raw.githubusercontent.com/Fiery51/DataScience1/main/CodeTemplates/Data%20Science%201%20Projects/FinalProject/Graph2.csv"
+  ).then(function (newData) {
     // Set up the chart dimensions for the new graph
-    var margin = { top: 40, right: 30, bottom: 70, left: 50 };
-    var width = 600 - margin.left - margin.right;
+    var margin = { top: 375, right: 30, bottom: 70, left: 50 };
+    var width = 564 - margin.left - margin.right; // Set the desired width
     var height = 550 - margin.top - margin.bottom;
 
     // Create SVG container for the new graph
@@ -144,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .scaleBand()
       .domain(newData.map((d) => d.Word))
       .range([0, width])
-      .padding(0.1);
+      .padding(0.2); // Adjust the padding for separation
     var yScale = d3
       .scaleLinear()
       .domain([0, d3.max(newData, (d) => d.Count)])
@@ -161,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
     svg.append("g").call(d3.axisLeft(yScale));
 
     var bars = svg
-      .selectAll("rect")
+      .selectAll(".bar-group")
       .data(newData)
       .enter()
       .append("g")
@@ -225,5 +227,27 @@ document.addEventListener("DOMContentLoaded", function () {
       svg.select(".tooltip").remove();
       svg.select(".tooltip-background").remove();
     }
+
+    // 1. Toggle Analysis Text Functionality
+    var analysisToggle = document.getElementById("toggleAnalysis");
+    var analysisDiv = document.getElementById("Analysis");
+
+    analysisToggle.addEventListener("click", function () {
+      analysisDiv.style.display =
+        analysisDiv.style.display === "none" ? "block" : "none";
+    });
+
+    // 2. Change Color Scheme Functionality
+    var changeColorBtn = document.getElementById("changeColorScheme");
+
+    changeColorBtn.addEventListener("click", function () {
+      // Change the color scheme of the chart
+      var bars = svg.selectAll(".bar-group rect");
+
+      bars.attr("fill", function (d) {
+        // Toggle between red and green color scheme
+        return d.Sentiment === "1" ? "green" : "red";
+      });
+    });
   });
 });

@@ -16,8 +16,19 @@ body {
   text-align: center;
 }
 
-#Vis_1 {
-  margin-right: 25vh;
+#Visualizations {
+  display: flex;
+}
+
+#Vis_1,
+#Vis_2 {
+  flex: 1; /* This makes them take up equal width */
+  padding: 10px; /* Add padding as needed */
+  border: 1px solid #ccc; /* Add borders or other styles as needed */
+}
+
+#Vis_2 {
+  margin-left: 25px; /* Add spacing between Vis_1 and Vis_2 */
 }
 
 #chart {
