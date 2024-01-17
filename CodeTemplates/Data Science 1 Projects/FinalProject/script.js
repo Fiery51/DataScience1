@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  var body = document.body;
+  body.classList.add("light-theme");
+
   // Your existing hardcoded data
   var existingData = [
     ["smoke bombs", 1, 40],
@@ -81,18 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var xPos =
       parseFloat(d3.select(this).attr("x")) + existingXScale.bandwidth() / 2;
     var yPos = parseFloat(d3.select(this).attr("y")) - 10;
-
-    existingSvg
-      .append("text")
-      .attr("class", "value-popup")
-      .attr("x", xPos)
-      .attr("y", yPos)
-      .attr("text-anchor", "middle")
-      .text(d[2])
-      .style("opacity", 0)
-      .transition()
-      .duration(200)
-      .style("opacity", 1);
 
     existingSvg
       .append("rect")
@@ -186,18 +177,6 @@ document.addEventListener("DOMContentLoaded", function () {
       var yPos = parseFloat(d3.select(this).attr("y")) - 10;
 
       svg
-        .append("text")
-        .attr("class", "value-popup")
-        .attr("x", xPos)
-        .attr("y", yPos)
-        .attr("text-anchor", "middle")
-        .text(d.Count)
-        .style("opacity", 0)
-        .transition()
-        .duration(200)
-        .style("opacity", 1);
-
-      svg
         .append("rect")
         .attr("class", "tooltip-background")
         .attr("x", xPos - 20)
@@ -228,26 +207,80 @@ document.addEventListener("DOMContentLoaded", function () {
       svg.select(".tooltip-background").remove();
     }
 
-    // 1. Toggle Analysis Text Functionality
-    var analysisToggle = document.getElementById("toggleAnalysis");
-    var analysisDiv = document.getElementById("Analysis");
+    var mainContent = document.getElementById("main-content");
+    var visualizations = document.getElementById("Visualizations");
+    var chart1 = document.getElementById("Vis_1"); // Assuming this is your first graph
+    var chart2 = document.getElementById("Vis_2"); // Assuming this is your second graph
+    var intro_1 = document.getElementById("intro_1");
+    var intro_2 = document.getElementById("intro_2");
 
-    analysisToggle.addEventListener("click", function () {
-      analysisDiv.style.display =
-        analysisDiv.style.display === "none" ? "block" : "none";
-    });
+    var firstTriggerToShow = 2300; // First scroll position to show the first graph
+    var firstTriggerToHide = 2800; // First scroll position to hide the first graph
+    var secondTriggerToShow = 3800; // Second scroll position to show the second graph
+    var secondTriggerToHide = 5200; // Second scroll position to hide the second graph
+
+    window.onscroll = function () {
+      var currentScrollPos = window.scrollY;
+
+      // Hide both charts initially
+      chart1.style.display = "none";
+      chart2.style.display = "none";
+      visualizations.style.display = "none"; // Ensure the container is also hidden
+
+      // Show first graph
+      if (
+        currentScrollPos > firstTriggerToShow &&
+        currentScrollPos < firstTriggerToHide
+      ) {
+        visualizations.style.display = "block"; // Display the container
+        visualizations.style.width = "50%"; // Adjust width if needed
+        mainContent.style.width = "50%";
+        chart1.style.display = "block";
+        chart2.style.display = "none";
+      }
+
+      // Show second graph
+      if (
+        currentScrollPos > secondTriggerToShow &&
+        currentScrollPos < secondTriggerToHide
+      ) {
+        visualizations.style.display = "block"; // Display the container
+        visualizations.style.width = "50%"; // Adjust width if needed
+        mainContent.style.width = "50%";
+        chart1.style.display = "none";
+        chart2.style.display = "block";
+      }
+
+      // Hide visualizations if outside any trigger points
+      if (
+        currentScrollPos < firstTriggerToShow ||
+        (currentScrollPos > firstTriggerToHide &&
+          currentScrollPos < secondTriggerToShow) ||
+        currentScrollPos > secondTriggerToHide
+      ) {
+        visualizations.style.display = "none"; // Hide the container
+        mainContent.style.width = "100%";
+      }
+    };
+
+    // 2. Change Color Scheme Functionality
+    var changeColorBtn = document.getElementById("changeColorScheme");
 
     // 2. Change Color Scheme Functionality
     var changeColorBtn = document.getElementById("changeColorScheme");
 
     changeColorBtn.addEventListener("click", function () {
-      // Change the color scheme of the chart
-      var bars = svg.selectAll(".bar-group rect");
+      // Change the theme of the website
+      var body = document.body;
 
-      bars.attr("fill", function (d) {
-        // Toggle between red and green color scheme
-        return d.Sentiment === "1" ? "green" : "red";
-      });
+      // Toggle between light and dark themes
+      if (body.classList.contains("light-theme")) {
+        body.classList.remove("light-theme");
+        body.classList.add("dark-theme");
+      } else {
+        body.classList.remove("dark-theme");
+        body.classList.add("light-theme");
+      }
     });
   });
 });
